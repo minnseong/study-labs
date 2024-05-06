@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import labs.minnseong.stocksystemconcurrencyissue.domain.Stock;
+import labs.minnseong.stocksystemconcurrencyissue.facade.NamedLockStockFacade;
 import labs.minnseong.stocksystemconcurrencyissue.facade.OptimisticLockStockFacade;
 import labs.minnseong.stocksystemconcurrencyissue.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ class StockServiceTest {
 
     @Autowired
     private OptimisticLockStockFacade optimisticLockStockService;
+
+    @Autowired
+    private NamedLockStockFacade namedLockStockFacade;
 
     @Autowired
     private StockRepository stockRepository;
@@ -118,6 +122,31 @@ class StockServiceTest {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Stock stock = stockRepository.findByProductId(1L).orElseThrow();
+
+        assertEquals(0, stock.getQuantity());
+    }
+
+    @Test
+    public void 동시에_100개의_요청_네임드_락() throws InterruptedException {
+        int threadCount = 100;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0 ; i < threadCount ; i++) {
+            executorService.submit(() -> {
+                try {
+                    namedLockStockFacade.decrease(1L, 1L);
+                }
+                finally {
                     latch.countDown();
                 }
             });
