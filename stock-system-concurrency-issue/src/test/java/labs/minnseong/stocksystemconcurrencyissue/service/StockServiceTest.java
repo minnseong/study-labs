@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import labs.minnseong.stocksystemconcurrencyissue.domain.Stock;
+import labs.minnseong.stocksystemconcurrencyissue.facade.OptimisticLockStockFacade;
 import labs.minnseong.stocksystemconcurrencyissue.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -23,6 +24,9 @@ class StockServiceTest {
 
     @Autowired
     private PessimisticLockStockService pessimisticLockStockService;
+
+    @Autowired
+    private OptimisticLockStockFacade optimisticLockStockService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -88,6 +92,32 @@ class StockServiceTest {
                     pessimisticLockStockService.decrease(1L, 1L);
                 }
                 finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Stock stock = stockRepository.findByProductId(1L).orElseThrow();
+
+        assertEquals(0, stock.getQuantity());
+    }
+
+    @Test
+    public void 동시에_100개의_요청_낙관적_락() throws InterruptedException {
+        int threadCount = 100;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0 ; i < threadCount ; i++) {
+            executorService.submit(() -> {
+                try {
+                    optimisticLockStockService.decrease(1L, 1L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } finally {
                     latch.countDown();
                 }
             });
