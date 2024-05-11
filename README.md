@@ -17,4 +17,5 @@
 [레포지토리] https://github.com/minnseong/study-labs/tree/main/stock-system-concurrency-issue
 
 [정리] JPA 낙관적락 & 비관적락 : https://minnseong.tistory.com/44
+
 AOP 기반 Redis 분산락 적용 : https://minnseong.tistory.com/45
