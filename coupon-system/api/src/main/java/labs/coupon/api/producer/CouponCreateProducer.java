@@ -1,7 +1,8 @@
 package labs.coupon.api.producer;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import labs.coupon.api.producer.request.CouponCreateSendRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -11,14 +12,16 @@ import org.springframework.stereotype.Component;
 public class CouponCreateProducer {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
-    public void create(Long userId, Long couponId) {
+    public void create(CouponCreateSendRequest request) {
 
-        Map<String, Long> message = new HashMap<>();
-        message.put("userId", userId);
-        message.put("couponId", couponId);
-
-        kafkaTemplate.send("coupon_create", message);
+        try {
+            final String payload = objectMapper.writeValueAsString(request);
+            kafkaTemplate.send("coupon_create", payload);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

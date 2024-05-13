@@ -3,6 +3,7 @@ package labs.coupon.api.service;
 import labs.coupon.api.domain.coupon.Coupon;
 import labs.coupon.api.domain.coupon.repository.CouponRepository;
 import labs.coupon.api.producer.CouponCreateProducer;
+import labs.coupon.api.producer.request.CouponCreateSendRequest;
 import labs.coupon.api.repository.AppliedUserRepository;
 import labs.coupon.api.repository.CouponCountRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ApplyService {
             return;
         }
 
-        couponCreateProducer.create(userId, couponId);
+        couponCreateProducer.create(CouponCreateSendRequest.of(userId, couponId));
     }
 
 }

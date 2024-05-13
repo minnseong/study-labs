@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import labs.coupon.api.domain.coupon.Coupon;
+import labs.coupon.api.domain.coupon.repository.CouponBoxRepository;
 import labs.coupon.api.domain.user.User;
 import labs.coupon.api.domain.user.repository.UserRepository;
 import labs.coupon.api.domain.coupon.repository.CouponRepository;
@@ -25,6 +26,9 @@ class ApplyServiceTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CouponBoxRepository couponBoxRepository;
+
     @Test
     public void 한번_응모() {
 
@@ -36,7 +40,7 @@ class ApplyServiceTest {
         applyService.apply(user.getId(), coupon.getId());
 
         // then
-        long count = couponRepository.count();
+        long count = couponBoxRepository.count();
 
         assertThat(count).isEqualTo(1);
     }
@@ -68,7 +72,7 @@ class ApplyServiceTest {
         Thread.sleep(10000);
 
         // then
-        long count = couponRepository.count();
+        long count = couponBoxRepository.count();
 
         assertThat(count).isEqualTo(100);
     }
@@ -99,7 +103,7 @@ class ApplyServiceTest {
         Thread.sleep(10000);
 
         // then
-        long count = couponRepository.count();
+        long count = couponBoxRepository.count();
 
         assertThat(count).isEqualTo(1);
     }
