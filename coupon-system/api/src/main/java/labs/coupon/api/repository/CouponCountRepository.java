@@ -10,10 +10,10 @@ public class CouponCountRepository {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    public Long increment() {
+    public Long increment(Long couponId) {
         return redisTemplate
                 .opsForValue()
-                .increment("coupon_count");
+                .increment(couponId.toString());
     }
 
 }

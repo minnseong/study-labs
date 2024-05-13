@@ -1,4 +1,4 @@
-package labs.coupon.api.repository;
+package labs.coupon.api.domain.coupon.repository;
 
 import labs.coupon.api.domain.coupon.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
