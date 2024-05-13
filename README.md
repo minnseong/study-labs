@@ -19,3 +19,13 @@
 [정리] JPA 낙관적락 & 비관적락 : https://minnseong.tistory.com/44
 
 AOP 기반 Redis 분산락 적용 : https://minnseong.tistory.com/45
+
+<br>
+
+**3. 선착순 쿠폰 이벤트 쿠폰**
+
+[기간] 24.05.12 ~ 
+
+[레포지토리] [https://github.com/minnseong/study-labs/tree/main/stock-system-concurrency-issue](https://github.com/minnseong/study-labs/tree/main/coupon-system)
+
+[정리] 
