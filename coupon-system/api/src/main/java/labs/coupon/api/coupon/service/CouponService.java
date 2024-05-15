@@ -1,12 +1,12 @@
-package labs.coupon.api.service.coupon;
+package labs.coupon.api.coupon.service;
 
-import labs.coupon.api.domain.coupon.Coupon;
-import labs.coupon.api.domain.coupon.repository.CouponRepository;
-import labs.coupon.api.exception.coupon.CouponDuplicateApplyException;
-import labs.coupon.api.exception.coupon.CouponSoldOutException;
+import labs.coupon.api.coupon.domain.Coupon;
+import labs.coupon.api.coupon.domain.CouponRepository;
+import labs.coupon.api.coupon.exception.CouponDuplicateApplyException;
+import labs.coupon.api.coupon.exception.CouponSoldOutException;
 import labs.coupon.api.producer.CouponCreateProducer;
 import labs.coupon.api.producer.request.CouponCreateSendRequest;
-import labs.coupon.api.service.coupon.vo.CouponVO;
+import labs.coupon.api.coupon.service.vo.CouponVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

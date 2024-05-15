@@ -1,6 +1,6 @@
-package labs.coupon.api.service.coupon;
+package labs.coupon.api.coupon.service;
 
-import labs.coupon.api.service.coupon.vo.CouponVO;
+import labs.coupon.api.coupon.service.vo.CouponVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

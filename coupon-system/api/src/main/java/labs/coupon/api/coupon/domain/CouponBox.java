@@ -1,4 +1,4 @@
-package labs.coupon.api.domain.coupon;
+package labs.coupon.api.coupon.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Coupon {
+public class CouponBox {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private Long couponId;
 
-    private int maxCount;
+    private Long userId;
 
 }

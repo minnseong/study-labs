@@ -1,4 +1,4 @@
-package labs.coupon.api.service.coupon.vo;
+package labs.coupon.api.coupon.service.vo;
 
 import lombok.Builder;
 import lombok.Getter;

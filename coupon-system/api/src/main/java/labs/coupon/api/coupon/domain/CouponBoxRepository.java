@@ -1,6 +1,5 @@
-package labs.coupon.api.domain.coupon.repository;
+package labs.coupon.api.coupon.domain;
 
-import labs.coupon.api.domain.coupon.CouponBox;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CouponBoxRepository extends JpaRepository<CouponBox, Long> {

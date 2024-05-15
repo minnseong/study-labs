@@ -1,4 +1,4 @@
-package labs.coupon.api.exception.coupon;
+package labs.coupon.api.coupon.exception;
 
 public class CouponDuplicateApplyException extends RuntimeException {
 
