@@ -1,32 +1,33 @@
-package labs.coupon.api.service;
+package labs.coupon.api.service.coupon;
 
 import labs.coupon.api.domain.coupon.Coupon;
 import labs.coupon.api.domain.coupon.repository.CouponRepository;
 import labs.coupon.api.producer.CouponCreateProducer;
 import labs.coupon.api.producer.request.CouponCreateSendRequest;
-import labs.coupon.api.repository.AppliedUserRepository;
-import labs.coupon.api.repository.CouponCountRepository;
+import labs.coupon.api.service.coupon.vo.CouponVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ApplyService {
+public class CouponService {
 
-    private final CouponCountRepository couponCountRepository;
-    private final AppliedUserRepository appliedUserRepository;
-    private final CouponCreateProducer couponCreateProducer;
     private final CouponRepository couponRepository;
+    private final CouponCreateProducer couponCreateProducer;
+    private final CouponRedisOperation couponRedisOperation;
 
     public void apply(Long userId, Long couponId) {
-        Long apply = appliedUserRepository.add(userId);
-        Coupon coupon = couponRepository.findById(couponId).orElseThrow();
+
+        CouponVO couponVO = CouponVO.of(couponId, userId);
+
+        Long apply = couponRedisOperation.addSet(couponVO);
 
         if (apply != 1) {
             return;
         }
 
-        Long count = couponCountRepository.increment(couponId);
+        Coupon coupon = couponRepository.findById(couponId).orElseThrow();
+        Long count = couponRedisOperation.incr(couponVO);
 
         if (count > coupon.getMaxCount()) {
             return;

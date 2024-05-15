@@ -10,6 +10,7 @@ import labs.coupon.api.domain.coupon.repository.CouponBoxRepository;
 import labs.coupon.api.domain.user.User;
 import labs.coupon.api.domain.user.repository.UserRepository;
 import labs.coupon.api.domain.coupon.repository.CouponRepository;
+import labs.coupon.api.service.coupon.CouponService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ApplyServiceTest {
 
     @Autowired
-    private ApplyService applyService;
+    private CouponService applyService;
 
     @Autowired
     private CouponRepository couponRepository;
