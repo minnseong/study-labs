@@ -52,7 +52,7 @@ class ApplyServiceTest {
         Coupon coupon = couponRepository.save(Coupon.builder().title("Coupon_A").maxCount(100).build());
 
         // when
-        int threadCount = 100;
+        int threadCount = 1000;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -74,7 +74,7 @@ class ApplyServiceTest {
         // then
         long count = couponBoxRepository.count();
 
-        assertThat(count).isEqualTo(100);
+        assertThat(count).isEqualTo(coupon.getMaxCount());
     }
 
     @Test
@@ -106,5 +106,37 @@ class ApplyServiceTest {
         long count = couponBoxRepository.count();
 
         assertThat(count).isEqualTo(1);
+    }
+
+    @Test
+    public void 여러명_중복불가_응모() throws InterruptedException {
+
+        // given
+        Coupon coupon = couponRepository.save(Coupon.builder().title("Coupon_A").maxCount(100).build());
+
+        // when
+        int threadCount = 1000;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            long userId = i % 200;
+            executorService.submit(() -> {
+                try {
+                    applyService.apply(userId, coupon.getId());
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Thread.sleep(10000);
+
+        // then
+        long count = couponBoxRepository.count();
+
+        assertThat(count).isEqualTo(coupon.getMaxCount());
     }
 }
