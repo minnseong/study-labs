@@ -9,8 +9,6 @@ import com.group.libraryapp.domain.user.loanhistory.UserLoanHistoryRepository
 import com.group.libraryapp.dto.book.request.BookLoanRequest
 import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
-import com.group.libraryapp.service.user.UserService
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -79,7 +77,13 @@ class BookServiceTest @Autowired constructor(
         val book = bookRepository.save(Book("bookA"))
         val userA = userRepository.save(User("userA", 21))
         val userB = userRepository.save(User("userB", 21))
-        userLoanHistoryRepository.save(UserLoanHistory(userA, book.name, false))
+        userLoanHistoryRepository.save(
+            UserLoanHistory(
+                userA,
+                book.name,
+                false
+            )
+        )
 
         val request = BookLoanRequest(userB.name, "bookA")
 
@@ -98,7 +102,13 @@ class BookServiceTest @Autowired constructor(
         // given
         val book = bookRepository.save(Book("bookA"))
         val userA = userRepository.save(User("userA", 21))
-        userLoanHistoryRepository.save(UserLoanHistory(userA, book.name, false))
+        userLoanHistoryRepository.save(
+            UserLoanHistory(
+                userA,
+                book.name,
+                false
+            )
+        )
         val request = BookReturnRequest("userA", "bookA")
 
         // when
