@@ -29,3 +29,11 @@ AOP 기반 Redis 분산락 적용 : https://minnseong.tistory.com/45
 [레포지토리] [https://github.com/minnseong/study-labs/tree/main/stock-system-concurrency-issue](https://github.com/minnseong/study-labs/tree/main/coupon-system)
 
 [정리] 선착순 쿠폰 발급 요구사항 개발 (Redis, Kafka) : https://minnseong.tistory.com/46
+
+<br>
+
+**3. 코틀린 학습**
+
+[기간] 24.05.16 ~ 
+
+[레포지토리] [https://github.com/minnseong/study-labs/tree/main/library-app](https://github.com/minnseong/study-labs/tree/main/library-app)
