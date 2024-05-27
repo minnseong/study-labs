@@ -34,6 +34,6 @@ AOP 기반 Redis 분산락 적용 : https://minnseong.tistory.com/45
 
 **3. 코틀린 학습**
 
-[기간] 24.05.16 ~ 
+[기간] 24.05.16 ~ 24.05.28
 
 [레포지토리] [https://github.com/minnseong/study-labs/tree/main/library-app](https://github.com/minnseong/study-labs/tree/main/library-app)
